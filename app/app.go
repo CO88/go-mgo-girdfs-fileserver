@@ -46,5 +46,5 @@ func (a *App) UploadFile(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) Run(host string) {
-	log.Fatal(http.ListenAndServe(host, app.Router))
+	log.Fatal(http.ListenAndServe(host, a.Router))
 }
