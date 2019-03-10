@@ -40,7 +40,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	
 	//set corsHeader
 	w.Header().Set("Access-Control-Allow-Origin", *corsHeader)
-
+	w.Header().Set("Content-Disposition", "attachment; filename="+filename)
 	//set Expiry Header
 	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
 	expiration := time.Now().Add(time.Duration(*maxAge) * time.Second)
@@ -48,9 +48,10 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	
 	ctype := getMimeType(file)
 	w.Header().Set("Content-Type", ctype)
-	
 	w.Header().Set("Content-Length", strconv.FormatInt(file.Size(), 10))
 	w.Header().Set("ETag", file.MD5())
+	
+
 	//done set Header
 	
 	io.Copy(w, file)
