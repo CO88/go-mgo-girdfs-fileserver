@@ -60,7 +60,6 @@ func SaveFile(w http.ResponseWriter, r *http.Request) {
 	//TODO
 }
 
-
 func getMimeType(file *mgo.GridFile) string {
 	ctype := file.ContentType()
 	
