@@ -39,8 +39,8 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 	
 	//set corsHeader
-	w.Header().Set("Access-Control-Allow-Origin", corsHeader)
-	time.D
+	w.Header().Set("Access-Control-Allow-Origin", *corsHeader)
+
 	//set Expiry Header
 	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
 	expiration := time.Now().Add(time.Duration(*maxAge) * time.Second)
