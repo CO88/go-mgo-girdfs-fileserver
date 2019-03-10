@@ -1,4 +1,4 @@
-package Handler
+package handler
 
 import (
 	"io"
@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/globalsign/mgo"
+	"github.com/blanccobb/go-mgo-girdfs-fileserver/app/db"
 )
 
 func GetFile(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +25,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	flag.Parse()
 	
 	//
-	file, err := Session.DB("").GridFS("fs").Open(name)
+	file, err := db.Gridfs.Open(name)
 	if err != nil {
 		if err == mgo.ErrNotFound {
 			w.WriteHeader(http.StatusNotFound)
