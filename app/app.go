@@ -2,6 +2,7 @@ package app
 
 import (
 	"net/http"
+	"log"
 	
 	"github.com/gorilla/mux"
 	"github.com/blanccobb/go-mgo-girdfs-fileserver/app/handler"
@@ -42,4 +43,8 @@ func (a *App) DownloadFile(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) UploadFile(w http.ResponseWriter, r *http.Request) {
 	handler.SaveFile(w,r)
+}
+
+func (a *App) Run(host string) {
+	log.Fatal(http.ListenAndServe(host, app.Router))
 }
