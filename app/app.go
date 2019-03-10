@@ -13,10 +13,13 @@ type App struct {
 }
 
 func (a *App) Init() {
+	
 	a.Router = mux.NewRouter()
+	a.setRouters()
 }
 
 func (a *App) setRouters() {
+	a.Get("/", a.GetRoot)
 	a.Get("/fs/{name}", a.DownloadFile)
 	a.Post("/fs/{name}", a.UploadFile)
 }
@@ -36,6 +39,12 @@ func (a *App) Put(path string, f func(w http.ResponseWriter, r *http.Request)) {
 func (a *App) Delete(path string, f func(w http.ResponseWriter, r *http.Request)) {
 	a.Router.HandleFunc(path, f).Methods("DELETE")
 }
+
+// Todo Handler
+func (a *App) GetRoot(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "not implemented yet !")
+}
+
 
 func (a *App) DownloadFile(w http.ResponseWriter, r *http.Request) {
 	handler.GetFile(w,r)
