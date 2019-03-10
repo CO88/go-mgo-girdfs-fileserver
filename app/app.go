@@ -7,6 +7,7 @@ import (
 	
 	"github.com/gorilla/mux"
 	"github.com/blanccobb/go-mgo-girdfs-fileserver/app/handler"
+	"github.com/blanccobb/go-mgo-girdfs-fileserver/app/db"
 )
 
 type App struct {
@@ -14,6 +15,8 @@ type App struct {
 }
 
 func (a *App) Init() {
+	
+	db.Init()
 	
 	a.Router = mux.NewRouter()
 	a.setRouters()
