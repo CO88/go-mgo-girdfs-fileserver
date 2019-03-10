@@ -38,7 +38,6 @@ func (a *App) Delete(path string, f func(w http.ResponseWriter, r *http.Request)
 
 func (a *App) DownloadFile(w http.ResponseWriter, r *http.Request) {
 	handler.GetFile(w,r)
-	handler.
 }
 
 func (a *App) UploadFile(w http.ResponseWriter, r *http.Request) {
