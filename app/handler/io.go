@@ -18,7 +18,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	name := vars["name"]
 	
-	cosrHeader := flag.String("allow-origin", "*", "value for Access-Control-Allow-Origin header")
+	corsHeader := flag.String("allow-origin", "*", "value for Access-Control-Allow-Origin header")
 	maxAge := flag.Int("max-age", 31557600, "Lifetime (in seconds) for "+
 		"setting Cache-Control and Expires headers.  Defaults to one year.")
 	
@@ -40,10 +40,10 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	
 	//set corsHeader
 	w.Header().Set("Access-Control-Allow-Origin", corsHeader)
-	
+	time.D
 	//set Expiry Header
 	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
-	expiration := time.Now().Add(time.Duration(maxAge) * time.Second)
+	expiration := time.Now().Add(time.Duration(*maxAge) * time.Second)
 	w.Header().Set("Expires", expiration.Format(time.RFC1123))
 	
 	ctype := getMimeType(file)
