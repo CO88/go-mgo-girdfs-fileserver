@@ -2,10 +2,10 @@ package handler
 
 import (
 	"io"
-	"flag"
+//	"flag"
 	"mime"
 	"fmt"
-	"time"
+//	"time"
 	"strconv"
 	"path/filepath"
 	"net/http"
@@ -18,13 +18,6 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	name := vars["name"]
 	
-	corsHeader := flag.String("allow-origin", "*", "value for Access-Control-Allow-Origin header")
-	maxAge := flag.Int("max-age", 31557600, "Lifetime (in seconds) for "+
-		"setting Cache-Control and Expires headers.  Defaults to one year.")
-	
-	flag.Parse()
-	
-	//
 	file, err := db.Gridfs.Open(name)
 	if err != nil {
 		if err == mgo.ErrNotFound {
@@ -38,13 +31,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 	
-	//set corsHeader
-	w.Header().Set("Access-Control-Allow-Origin", *corsHeader)
 	w.Header().Set("Content-Disposition", "attachment; filename="+name)
-	//set Expiry Header
-	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", maxAge))
-	expiration := time.Now().Add(time.Duration(*maxAge) * time.Second)
-	w.Header().Set("Expires", expiration.Format(time.RFC1123))
 	
 	ctype := getMimeType(file)
 	w.Header().Set("Content-Type", ctype)
