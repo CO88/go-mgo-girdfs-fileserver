@@ -9,6 +9,7 @@ import (
 
 var (
 	Session		*mgo.Session
+	Gridfs		*mgo.GridFS
 )
 
 func Init() {
@@ -16,6 +17,8 @@ func Init() {
 	if err != nil {
 		log.Fatal("CreateSession: %s\n", err)
 	}	
+	
+	Gridfs = Session.DB(AuthDatabase).GridFS("fs")
 	
 }
 
