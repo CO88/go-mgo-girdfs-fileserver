@@ -5,6 +5,7 @@ import (
 	"log"
 	
 	"github.com/gorilla/mux"
+	"github.com/blanccobb/go-mgo-girdfs-fileserver/app/handler"
 )
 
 type App struct {
@@ -37,9 +38,9 @@ func (a *App) Delete(path string, f func(w http.ResponseWriter, r *http.Request)
 }
 
 func (a *App) DownloadFile(w http.ResponseWriter, r *http.Request) {
-	Handler.GetFile(w,r)
+	handler.GetFile(w,r)
 }
 
 func (a *App) UploadFile(w http.ResponseWriter, r *http.Request) {
-	Handler.SaveFile(w,r)
+	handler.SaveFile(w,r)
 }
