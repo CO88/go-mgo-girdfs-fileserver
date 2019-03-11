@@ -48,6 +48,11 @@ func SaveFile(w http.ResponseWriter, r *http.Request) {
 	//TODO
 	//vars := mux.Vars(r)
 	//name := vars["name"]
+
+	if err := r.ParseMultipartForm(1 * 1024 * 1024); err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+	
 	for _, fileHeaders := range r.MultipartForm.File {
         for _, fileHeader := range fileHeaders {
             file, _ := fileHeader.Open()            
