@@ -6,7 +6,10 @@ import (
 	"mime"
 	"fmt"
 //	"time"
+	"bufio"
+	"errors"
 	"strconv"
+	"mime/multipart"
 	"path/filepath"
 	"net/http"
 	"github.com/gorilla/mux"
@@ -45,9 +48,44 @@ func SaveFile(w http.ResponseWriter, r *http.Request) {
 	//TODO
 	//vars := mux.Vars(r)
 	//name := vars["name"]
+	for _, fileHeaders := range r.MultipartForm.File {
+        for _, fileHeader := range fileHeaders {
+            file, _ := fileHeader.Open()            
+            if gridFile, err := db.Gridfs.Create(fileHeader.Filename); err != nil {
+                //errorResponse(w, err, http.StatusInternalServerError)
+                return
+            } else {
+                //gridFile.SetMeta(fileMetadata)
+                gridFile.SetName(fileHeader.Filename)
+                if err := writeToGridFile(file, gridFile); err != nil {
+                    //errorResponse(w, err, http.StatusInternalServerError)
+                    return
+                }
+            }
+        }
+	}
+}
+
+func writeToGridFile(file multipart.File, gridFile *mgo.GridFile) error {
+	reader := bufio.NewReader(file)
+	defer file.Close()
 	
-	
-	
+	buf := make([]byte, 1024)
+	for {
+		n, err := reader.Read(buf)
+		if err != nil err != io.EOF {
+			return errors.New("Could not read the input file")
+		}
+		if n == 0 {
+			break
+		}
+		//write a chunk
+		if _, err := gridFile.Write(buf[:n]); err != nil {
+			return errors.New("Could not write to GridFs for "+ gridFile.Name())
+		}
+	}
+	gridFile.Close()
+	return nil
 }
 
 func getMimeType(file *mgo.GridFile) string {

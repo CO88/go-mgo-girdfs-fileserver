@@ -24,7 +24,7 @@ func (a *App) Init() {
 func (a *App) setRouters() {
 	a.Get("/", a.GetRoot)
 	a.Get("/fs/{name}", a.DownloadFile)
-	a.Post("/fs/{name}", a.UploadFile)
+	a.Post("/fs/", a.UploadFile)
 }
 
 func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
