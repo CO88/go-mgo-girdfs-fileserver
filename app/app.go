@@ -46,10 +46,8 @@ func (a *App) Delete(path string, f func(w http.ResponseWriter, r *http.Request)
 
 // Todo Handler
 func (a *App) GetRoot(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "not implemented yet !")
 	handler.LoadUploadPage(w, r)
 }
-
 
 func (a *App) DownloadFile(w http.ResponseWriter, r *http.Request) {
 	handler.GetFile(w,r)
