@@ -38,14 +38,16 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Length", strconv.FormatInt(file.Size(), 10))
 	w.Header().Set("ETag", file.MD5())
 	
-
-	//done set Header
-	
 	io.Copy(w, file)
 } 
 
 func SaveFile(w http.ResponseWriter, r *http.Request) {
 	//TODO
+	//vars := mux.Vars(r)
+	//name := vars["name"]
+	
+	
+	
 }
 
 func getMimeType(file *mgo.GridFile) string {
