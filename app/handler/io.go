@@ -73,7 +73,7 @@ func writeToGridFile(file multipart.File, gridFile *mgo.GridFile) error {
 	buf := make([]byte, 1024)
 	for {
 		n, err := reader.Read(buf)
-		if err != nil err != io.EOF {
+		if err != nil && err != io.EOF {
 			return errors.New("Could not read the input file")
 		}
 		if n == 0 {
